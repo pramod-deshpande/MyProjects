@@ -1,17 +1,65 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<MudThemeProvider Theme="Theme" IsDarkMode="false" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MudAppBar Dense="true" Elevation="0" Class="border-b-2 mud-border-secondary border-dashed">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Secondary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudSpacer />
+    <MudText Typo=Typo.h6 Color="Color.Primary">My Projects</MudText>
+</MudAppBar>
+<MudDrawer @bind-Open="@_drawerOpen" Class="border-r-2 mud-border-secondary border-dashed" Elevation="0">
+    <NavMenu />
+</MudDrawer>
+<MudMainContent>
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="py-10">
+        @Body
+    </MudContainer>
+</MudMainContent>
+
+
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    MudTheme Theme = new MudTheme()
+        {
+            Typography = new Typography()
+            {
+                Default = new Default()
+                {
+                    FontFamily = new[] { "Open Sans", "sans-serif" }
+                }
+            },
+            Palette = new Palette()
+            {
+                Background = "#f6f4f6",
+                Surface = "#f7f7f7",
+                AppbarBackground = "#f6f4f6",
+                DrawerBackground = "#f7f7f7",
+
+                Primary = "#6fdcbf",
+                PrimaryLighten = "#A2FFF2",
+                PrimaryDarken = "#3CA98C",
+
+                Secondary = "#ae8fdb",
+                SecondaryLighten = "#E1C2FF",
+                SecondaryDarken = "#7B5CA8",
+
+                Tertiary = "#fef8b4",
+                TertiaryLighten = "#FFFFE7",
+                TertiaryDarken = "#CBC581",
+
+
+            }
+
+
+        };
+}
