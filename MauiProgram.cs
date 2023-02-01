@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using MyProjects.Data;
 
 namespace MyProjects;
 
@@ -16,14 +16,12 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
+		builder.Services.AddSingleton<MyProjectsDatabaseInit>();
 
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
-
-
-
 		return builder.Build();
 	}
 }
