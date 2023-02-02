@@ -14,4 +14,15 @@ public static class Constants
 
     public static string DatabasePath =>
         Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+
+
+    public const string Filter_Active = "Active";
+    public const string Filter_Wishlist = "Wishlist";
+    public const string Filter_Ideas = "Ideas";
+    public const string Filter_Waitlist = "Waitlist";
+    public const string Filter_Trash = "Trash";
+    public const string Filter_Completed = "Completed";
+
+    public static List<string> Filters = new() { Filter_Active, Filter_Completed, Filter_Ideas, Filter_Trash, Filter_Waitlist, Filter_Wishlist };
+
 }

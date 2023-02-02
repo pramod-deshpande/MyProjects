@@ -9,9 +9,7 @@ namespace MyProjects.Data
         public string ProjectName { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
-        public string CurrentWork { get; set; }
         public string Notes { get; set; }
-        public string Priority { get; set; }
         public string GithubLink { get; set; }
         public string Category { get; set; }
         public DateTime CreationDate { get; set; }
