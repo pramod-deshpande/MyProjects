@@ -1,5 +1,5 @@
-﻿<MudNavLink Href=@Link Class="my-10"><MudText Typo="Typo.h6" Style="@($"color:{Colors.Grey.Lighten5}")">@Name</MudText></MudNavLink>
+﻿<MudNavLink Href=@Link Class="my-10"><MudText Typo="Typo.body1" Style="@($"color:{Colors.Grey.Lighten5}")">@Name</MudText></MudNavLink>
 @code {
-    [Parameter] public string Name { get; set; } = "/";
-    [Parameter] public string Link { get; set; } = "something";
+    [Parameter] public string Name { get; set; } 
+    [Parameter] public string Link { get; set; } 
 }
