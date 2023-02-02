@@ -4,21 +4,24 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudAppBar Dense="true" Elevation="0" Class="border-b mud-border-dark border-solid">
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Secondary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-    <MudSpacer />
-    <MudText Typo=Typo.h6 Color="Color.Primary">My Projects</MudText>
-</MudAppBar>
 
-<MudDrawer @bind-Open="@_drawerOpen"  Elevation="0" PreserveOpenState="true">
-    <NavMenu />
-</MudDrawer>
-<MudMainContent >
-    <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-10">
-        @Body
-    </MudContainer>
-</MudMainContent>
+<MudLayout>
+    <MudAppBar Dense="true" Elevation="0" Class="border-b mud-border-dark border-solid">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Secondary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudText Typo=Typo.h6 Color="Color.Default">My Projects</MudText>
+    </MudAppBar>
 
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always">
+        <NavMenu />
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-10">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
 
 @code {
@@ -42,8 +45,8 @@
             {
                 Background = "#ffffff",
                 Surface = "#ffffff",
-                AppbarBackground = "#ffffff",
-                DrawerBackground = "#ffffff",
+                AppbarBackground = "#1f1f1f",
+                DrawerBackground = "#1f1f1f",
             }
 
 

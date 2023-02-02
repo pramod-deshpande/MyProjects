@@ -15,14 +15,24 @@ public static class Constants
     public static string DatabasePath =>
         Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
 
+    //Category in Class
+    public const string Filter_Active = "active";
+    public const string Filter_Wishlist = "wishlist";
+    public const string Filter_Ideas = "ideas";
+    public const string Filter_Waitlist = "waitlist";
+    public const string Filter_Trash = "trash";
+    public const string Filter_Completed = "completed";
 
-    public const string Filter_Active = "Active";
-    public const string Filter_Wishlist = "Wishlist";
-    public const string Filter_Ideas = "Ideas";
-    public const string Filter_Waitlist = "Waitlist";
-    public const string Filter_Trash = "Trash";
-    public const string Filter_Completed = "Completed";
+    public static readonly List<string> Filters = new() { Filter_Active, Filter_Completed, Filter_Ideas, Filter_Trash, Filter_Waitlist, Filter_Wishlist };
 
-    public static List<string> Filters = new() { Filter_Active, Filter_Completed, Filter_Ideas, Filter_Trash, Filter_Waitlist, Filter_Wishlist };
 
+    public const string Label_Working = "working";
+    public const string Label_Stuck = "stuck";
+    public const string Label_Bug = "bug";
+    public const string Label_OnHold = "on-hold";
+    public const string Label_NeedInspiration = "need inspiration";
+    public const string Label_NeedBreak = "need a break";
+    public const string Label_FuckIt = "fuck it!";
+
+    public static readonly List<string> Labels = new() { Label_Working, Label_Stuck, Label_Bug, Label_OnHold, Label_NeedInspiration, Label_NeedBreak, Label_FuckIt };
 }
