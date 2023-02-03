@@ -1,0 +1,36 @@
+﻿@page "/create"
+@using MyProjects.Data;
+
+<PageHeading Title="Add Project"></PageHeading>
+
+<EditForm Model="myProject">
+    <MudContainer Class="d-flex flex-column gap-4" MaxWidth="MaxWidth.Medium">
+        <MudTextField @bind-Value="myProject.ProjectName" Class="@customStyle" Label="Project name" Variant="Variant.Filled"></MudTextField>
+        <MudTextField @bind-Value="myProject.Description" Label="Description" Class="@customStyle" Lines="2" Variant="Variant.Filled"></MudTextField>
+        <MudTextField @bind-Value="myProject.GithubLink" Label="Github link" Class="@customStyle" Variant="Variant.Filled"></MudTextField>
+        <div>
+            <MudChipSet @bind-SelectedChip="selected" Filter="true"  Mandatory="@mandatory">
+                @foreach (var item in Constants.Labels)
+                {
+                    <MudChip Size="Size.Small" Variant="Variant.Text" Class="@customStyle" Color="Color.Dark" Text="@item">@item</MudChip>
+                }
+            </MudChipSet>
+        </div>
+        <MudSelect T="string" Label="Category" Variant="Variant.Filled" Class="@customStyle" @bind-Value="myProject.Category" AnchorOrigin="Origin.BottomCenter">
+            @foreach (var item in Constants.Filters)
+            {
+                <MudSelectItem Value=@item />
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="myProject.Notes" Label="Notes" Class="@customStyle" Lines="4" Variant="Variant.Filled"></MudTextField>
+    </MudContainer>
+</EditForm>
+
+
+
+@code {
+    string customStyle = "rounded border-2 border-solid";
+    bool mandatory = true;
+    MudChip selected;
+    MyProject myProject = new();
+}

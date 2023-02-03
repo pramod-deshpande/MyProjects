@@ -7,10 +7,11 @@
 
 <MudLayout>
     <MudAppBar Dense="true" Elevation="0" Class="border-b mud-border-dark border-solid">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Secondary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Primary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
         <MudText Typo=Typo.h6 Color="Color.Default">My Projects</MudText>
     </MudAppBar>
+
 
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always">
         <NavMenu />
@@ -47,6 +48,16 @@
                 Surface = "#f7f7f7",
                 AppbarBackground = "#1f1f1f",
                 DrawerBackground = "#1f1f1f",
+
+                Primary = "#11768C",
+                PrimaryLighten = "#44A9BF",
+                PrimaryDarken = "#004359",
+
+
+                Secondary = "#8C2711",
+                SecondaryLighten = "#BF5A44",
+                SecondaryDarken = "#590000"
+
             }
 
 
