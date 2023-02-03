@@ -2,35 +2,51 @@
 @using MyProjects.Data;
 
 <PageHeading Title="Add Project"></PageHeading>
-
-<EditForm Model="myProject">
-    <MudContainer Class="d-flex flex-column gap-4" MaxWidth="MaxWidth.Medium">
-        <MudTextField @bind-Value="myProject.ProjectName" Class="@customStyle" Label="Project name" Variant="Variant.Filled"></MudTextField>
-        <MudTextField @bind-Value="myProject.Description" Label="Description" Class="@customStyle" Lines="2" Variant="Variant.Filled"></MudTextField>
-        <MudTextField @bind-Value="myProject.GithubLink" Label="Github link" Class="@customStyle" Variant="Variant.Filled"></MudTextField>
-        <div>
-            <MudChipSet @bind-SelectedChip="selected" Filter="true"  Mandatory="@mandatory">
-                @foreach (var item in Constants.Labels)
+<MudPaper Elevation="0" Class="rounded border-2 border-solid px-4 py-9">
+    <EditForm Model="myProject" OnValidSubmit="SubmitProject">
+        <MudContainer Class="d-flex flex-column gap-10 justify-center" MaxWidth="MaxWidth.Medium">
+            <MudTextField @bind-Value="myProject.ProjectName" Label="Project name" Required="true" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="myProject.Description" Label="Description" Lines="2" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="myProject.GithubLink" Label="Github link" Variant="Variant.Text"></MudTextField>
+            <div >
+                <MudText Class="d-inline-flex mr-4">Select a label:</MudText>
+                <MudChipSet @bind-SelectedChip="selected" Filter="true" Class="d-inline-flex" Mandatory="@mandatory">
+                    @foreach (var item in Constants.Labels)
+                    {
+                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Dark" Text="@item">@item</MudChip>
+                    }
+                </MudChipSet>
+            </div>
+            <MudSelect T="string" Label="Category" Variant="Variant.Text" @bind-Value="myProject.Category" AnchorOrigin="Origin.BottomCenter">
+                @foreach (var item in Constants.Filters)
                 {
-                    <MudChip Size="Size.Small" Variant="Variant.Text" Class="@customStyle" Color="Color.Dark" Text="@item">@item</MudChip>
+                    <MudSelectItem Value=@item />
                 }
-            </MudChipSet>
-        </div>
-        <MudSelect T="string" Label="Category" Variant="Variant.Filled" Class="@customStyle" @bind-Value="myProject.Category" AnchorOrigin="Origin.BottomCenter">
-            @foreach (var item in Constants.Filters)
+            </MudSelect>
+            <MudTextField @bind-Value="myProject.Notes" Label="Notes" Lines="5" Variant="Variant.Text"></MudTextField>
+            @if (!(string.IsNullOrEmpty(myProject.ProjectName) || string.IsNullOrEmpty(myProject.Category)))
             {
-                <MudSelectItem Value=@item />
+                <div>
+                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Dark"><MudText Typo="Typo.subtitle1">Submit</MudText></MudButton>
+                </div>
             }
-        </MudSelect>
-        <MudTextField @bind-Value="myProject.Notes" Label="Notes" Class="@customStyle" Lines="4" Variant="Variant.Filled"></MudTextField>
-    </MudContainer>
-</EditForm>
+      
+       
+        </MudContainer>
+    </EditForm>
+
+</MudPaper>
 
 
 
 @code {
-    string customStyle = "rounded border-2 border-solid";
     bool mandatory = true;
     MudChip selected;
     MyProject myProject = new();
+
+
+    void SubmitProject()
+    {
+        
+    }
 }
