@@ -3,10 +3,29 @@
 <PageHeading Title="Active Projects"></PageHeading>
 
 <MudToolBar Class="my-10">
-    <MudSpacer/>
+    <MudSpacer />
     <MudButton Class="px-3 py-2 rounded border-2 border-solid" Link="/create" StartIcon="@Icons.Material.Filled.Add"><MudText Typo="Typo.subtitle1">Add a project</MudText></MudButton>
 </MudToolBar>
 
+@if (!projects.Any())
+{
+    <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Secondary">No active projects.</MudText>
+}
 
-<DataCard/>
 
+@foreach (var project in projects)
+{
+    <DataCard project="project" />
+}
+
+
+
+
+
+@code {
+    List<MyProject> projects = new();
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await _db.GetProjectsAsync();
+    }
+}

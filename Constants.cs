@@ -35,4 +35,6 @@ public static class Constants
     public const string Label_FuckIt = "fuck it!";
 
     public static readonly List<string> Labels = new() { Label_Working, Label_Stuck, Label_Bug, Label_OnHold, Label_NeedInspiration, Label_NeedBreak, Label_FuckIt };
+
+
 }

@@ -3,18 +3,21 @@
 <MudCard Elevation="4" Square="true" Class="border-solid border-2 rounded">
     <MudCardContent Class="d-flex flex-column gap-4">
         <MudContainer Class="d-flex justify-space-between">
-            <MudText Typo="Typo.h6"> Project Title</MudText>
+            <MudText Typo="Typo.h6">@project.ProjectName</MudText>
             <MudButton Variant="Variant.Outlined" Class="px-3" StartIcon="@Icons.Material.Filled.Info"><MudText Typo="Typo.body2">info</MudText></MudButton>
         </MudContainer>
         <MudContainer>
-            <MudText Typo="Typo.caption"> GitHib link</MudText>
+            <MudLink Typo="Typo.caption" Href="@project.GithubLink">@project.GithubLink</MudLink>
         </MudContainer>
     </MudCardContent>
     <MudCardActions Class="d-flex flex-column gap-4">
         <MudContainer Class="d-flex">
-            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Primary">Status</MudChip>
-            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Secondary">Priority</MudChip>
-            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Dark">Last Draft Date</MudChip>
+            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Primary">@project.Label</MudChip>
+            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Secondary">@project.Category</MudChip>
+            @if(project.DraftCompletionDate != placeholderDate)
+            {
+                <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Dark">@project.DraftCompletionDate</MudChip>
+            }
         </MudContainer>
         <MudContainer>
             <MudButton Variant="Variant.Filled"  Size="Size.Small" DisableElevation="true" Color="Color.Dark"><MudText Typo="Typo.body2">Mark Completed</MudText></MudButton>
@@ -24,5 +27,6 @@
 
 
 @code {
-
+    [Parameter] public MyProject project { get; set; }
+    DateTime placeholderDate = new DateTime(0001, 01, 01);
 }

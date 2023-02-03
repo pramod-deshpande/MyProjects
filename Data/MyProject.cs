@@ -16,7 +16,7 @@ namespace MyProjects.Data
         [Required]
         public string Category { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime DraftCompletionDate { get; set; }
+        public DateTime? DraftCompletionDate { get; set; }
         public bool IsIterationCompleted { get; set; }
     }
 

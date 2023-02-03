@@ -19,7 +19,7 @@ public class MyProjectsDatabaseInit
             return;
         }
         Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-        var result = await Database.CreateTableAsync<MyProject>();
+        _ = await Database.CreateTableAsync<MyProject>();
     }
 
     public async Task<List<MyProject>> GetProjectsAsync()

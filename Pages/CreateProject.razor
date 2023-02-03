@@ -1,9 +1,10 @@
 ﻿@page "/create"
-@using MyProjects.Data;
+@inject ISnackbar Snackbar
+
 
 <PageHeading Title="Add Project"></PageHeading>
 <MudPaper Elevation="0" Class="rounded border-2 border-solid px-4 py-9">
-    <EditForm Model="myProject" OnValidSubmit="SubmitProject">
+    <EditForm Model="myProject" OnValidSubmit="SaveProject">
         <MudContainer Class="d-flex flex-column gap-10 justify-center" MaxWidth="MaxWidth.Medium">
             <MudTextField @bind-Value="myProject.ProjectName" Label="Project name" Required="true" Variant="Variant.Text"></MudTextField>
             <MudTextField @bind-Value="myProject.Description" Label="Description" Lines="2" Variant="Variant.Text"></MudTextField>
@@ -45,8 +46,15 @@
     MyProject myProject = new();
 
 
-    void SubmitProject()
+    async Task SaveProject()
     {
-        
+        myProject.Label = selected.Text ?? string.Empty;
+        myProject.CreationDate = DateTime.Now;
+        myProject.IsIterationCompleted = false;
+        myProject.DraftCompletionDate = null;
+        var res = await _db.SaveItemAsync(myProject);
+        myProject = new();
+        Snackbar.Add($"Project with an id of {res} was successfully saved!", Severity.Normal);
+        Navigation.NavigateTo("/");
     }
 }
