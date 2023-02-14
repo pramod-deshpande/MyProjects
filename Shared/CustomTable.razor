@@ -1,0 +1,15 @@
+﻿<MudTable Items="@Projects" Elevation=0 Hover="true">
+    <HeaderContent>
+        <MudTh>Title</MudTh>
+        <MudTh>Category</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.ProjectName</MudTd>
+        <MudTd DataLabel="Sign">@context.Category</MudTd>
+    </RowTemplate>
+</MudTable>
+
+
+@code{
+    [Parameter] public List<MyProject> Projects { get; set; }
+}

@@ -1,32 +1,41 @@
 ﻿
 
-<MudCard Elevation="4" Square="true" Class="border-solid border-2 rounded">
+<MudCard Elevation="4" Outlined="true" Class="rounded my-8">
     <MudCardContent Class="d-flex flex-column gap-4">
         <MudContainer Class="d-flex justify-space-between">
-            <MudText Typo="Typo.h6">@project.ProjectName</MudText>
-            <MudButton Variant="Variant.Outlined" Class="px-3" StartIcon="@Icons.Material.Filled.Info"><MudText Typo="Typo.body2">info</MudText></MudButton>
+            <MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))" Typo="Typo.h6">@project.ProjectName</MudLink>
+            <MudMenu Label="@project.Category">
+                <ActivatorContent>
+                    <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
+                </ActivatorContent>
+                <ChildContent>
+                    @foreach (var item in Constants.Filters)
+                    {
+                        <MudMenuItem OnClick="@(()=>ChangeCategory(item))" >@item</MudMenuItem>
+                    }
+                </ChildContent>
+
+            </MudMenu>
         </MudContainer>
         <MudContainer>
             <MudLink Typo="Typo.caption" Href="@project.GithubLink">@project.GithubLink</MudLink>
+
         </MudContainer>
     </MudCardContent>
-    <MudCardActions Class="d-flex flex-column gap-4">
-        <MudContainer Class="d-flex">
-            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Primary">@project.Label</MudChip>
-            <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Secondary">@project.Category</MudChip>
-            @if(project.DraftCompletionDate != placeholderDate)
-            {
-                <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Dark">@project.DraftCompletionDate</MudChip>
-            }
-        </MudContainer>
-        <MudContainer>
-            <MudButton Variant="Variant.Filled"  Size="Size.Small" DisableElevation="true" Color="Color.Dark"><MudText Typo="Typo.body2">Mark Completed</MudText></MudButton>
-        </MudContainer>
-    </MudCardActions>
 </MudCard>
 
 
 @code {
     [Parameter] public MyProject project { get; set; }
+    [Parameter] public Color CustomColor { get; set; }
     DateTime placeholderDate = new DateTime(0001, 01, 01);
+
+
+    private async Task ChangeCategory(string category)
+    {
+        project.Category = category;
+        await _db.SaveItemAsync(project);
+        _project.CallRequestRefresh();
+        StateHasChanged();
+    }
 }

@@ -1,43 +1,103 @@
 ﻿@page "/other-projects"
 
-<MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
-    <ChildContent>
-        @for (int i = 1; i < 4; i++)
-        {
-            var dropzone = i.ToString();
-            <MudPaper Class="ma-4 flex-grow-1">
-                <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                    <MudListSubheader>Drop Zone @dropzone</MudListSubheader>
-                    <MudDropZone T="DropItem" Identifier="@dropzone" Class="flex-grow-1" />
-                </MudList>
+
+<MudContainer Class="my-10">
+    <MudGrid Spacing="10">
+        <MudItem md="12">
+            <MudPaper Class="pa-5 border border-solid rounded mud-border-secondary">
+                <MudText Typo="Typo.h5">
+                    Up Next
+                </MudText>
+                @if (!WaitList().Any())
+                {
+                    <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
+                }
+                else
+                {
+                    @foreach (var item in WaitList())
+                    {
+                        <DataCard project="item" CustomColor="Color.Secondary"></DataCard>
+                    }
+                }
+
             </MudPaper>
-        }
-    </ChildContent>
-    <ItemRenderer>
-        <MudListItem Text="@context.Name" />
-    </ItemRenderer>
-</MudDropContainer>
+        </MudItem>
+        <MudItem md="12">
+            <MudPaper Class="pa-5 border border-solid rounded mud-border-info">
+                <MudText Typo="Typo.h5">
+                    Wish List
+                </MudText>
+                @if (!WishList().Any())
+                {
+                    <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
+                }
+                else
+                {
+                    @foreach (var item in WishList())
+                    {
+                        <DataCard project="item" CustomColor="Color.Info"></DataCard>
+                    }
+                }
+
+            </MudPaper>
+
+        </MudItem>
+        <MudItem md="12">
+            <MudPaper Class="pa-5 border border-solid rounded mud-border-tertiary">
+                <MudText Typo="Typo.h5">
+                    Ideas
+                </MudText>
+                @if (!GetIdeas().Any())
+                {
+                    <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
+                }
+                else
+                {
+                    @foreach (var item in GetIdeas())
+                    {
+                        <DataCard project="item" CustomColor="Color.Tertiary"></DataCard>
+                    }
+                }
+
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+
+
+
+
+
+
+
+
 
 @code {
-    private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
+    List<MyProject> projects => _project.Projects;
+
+    protected override async Task OnInitializedAsync()
     {
-        dropItem.Item.Selector = dropItem.DropzoneIdentifier;
+        _project.Projects = await _db.GetProjectsAsync();
+        _project.RefreshRequested += StateHasChanged;
     }
 
-    private List<DropItem> _items = new()
+    private List<MyProject> GetIdeas()
     {
-        new DropItem(){ Name = "Item 1", Selector = "1" },
-        new DropItem(){ Name = "Item 2", Selector = "1" },
-        new DropItem(){ Name = "Item 3", Selector = "1" },
-        new DropItem(){ Name = "Item 4", Selector = "2" },
-        new DropItem(){ Name = "Item 5", Selector = "2" },
-    };
-
-    public class DropItem
-    {
-        public string Name { get; init; }
-        public string Selector { get; set; }
+        return projects.Where(x => x.Category == Constants.Filter_Ideas).ToList();
     }
 
-    //Ideas, Wish list, wait list
+    private List<MyProject> WishList()
+    {
+        return projects.Where(x => x.Category == Constants.Filter_Wishlist).ToList();
+    }
+
+
+    private List<MyProject> WaitList()
+    {
+        return projects.Where(x => x.Category == Constants.Filter_Waitlist).ToList();
+    }
+
+
 }

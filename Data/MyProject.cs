@@ -9,7 +9,7 @@ namespace MyProjects.Data
         public int Id { get; set; }
         [Required]
         public string ProjectName { get; set; }
-        public string Label { get; set; }
+        public string? Label { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
         public string GithubLink { get; set; }

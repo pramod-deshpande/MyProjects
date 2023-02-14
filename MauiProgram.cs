@@ -18,6 +18,7 @@ public static class MauiProgram
 
 		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSingleton<MyProjectsDatabaseInit>();
+		builder.Services.AddSingleton<ProjectState>();
 
         builder.Services.AddMudServices();
 

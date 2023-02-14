@@ -12,6 +12,10 @@
         <MudText Typo=Typo.h6 Color="Color.Default">My Projects</MudText>
     </MudAppBar>
 
+    <MudToolBar Class="mt-16 px-6">
+        <MudSpacer />
+        <MudButton Class="px-3 py-2 rounded border-2 border-solid" Link="/create" StartIcon="@Icons.Material.Filled.Add"><MudText Typo="Typo.subtitle1">Add a project</MudText></MudButton>
+    </MudToolBar>
 
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always">
         <NavMenu />
