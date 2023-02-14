@@ -2,35 +2,7 @@
 
 <CustomHeading Title="Completed Projects"></CustomHeading>
 
-<MudContainer>
-    <MudTable Items="@GetCompletedProjects()" Class="border border-solid" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
-        <HeaderContent>
-            <MudTh><MudText Typo="Typo.h6">Project</MudText>  </MudTh>
-            <MudTh><MudText Typo="Typo.h6">Completed On</MudText></MudTh>
-            <MudTh><MudText Typo="Typo.h6">Revert</MudText></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Project"><MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{context.Id}"))">@context.ProjectName</MudLink> </MudTd>
-            <MudTd DataLabel="Completed On">@context.DraftCompletionDate</MudTd>
-            <MudTd DataLabel="Category">
-                <MudMenu Label="@context.Category">
-                    <ActivatorContent>
-                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Success">@context.Category</MudChip>
-                    </ActivatorContent>
-                    <ChildContent>
-                        @foreach (var item in Constants.Filters)
-                        {
-                            <MudMenuItem OnClick="@(()=>ChangeCategory(context,item))">@item</MudMenuItem>
-                        }
-                    </ChildContent>
-
-                </MudMenu>
-            </MudTd>
-        </RowTemplate>
-    </MudTable>
-</MudContainer>
-
-
+<CustomTable Loading="_loading" Projects="GetCompletedProjects()" Color="Color.Success"></CustomTable>
 
 
 @code{

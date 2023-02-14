@@ -1,0 +1,25 @@
+﻿@page "/dropped-projects"
+
+<CustomHeading Title="Dropped Projects"></CustomHeading>
+
+<CustomTable Loading="_loading" Projects="GetDroppedProjects()" Color="Color.Error"></CustomTable>
+
+
+@code {
+    List<MyProject> projects => _project.Projects;
+    bool _loading;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _project.Projects = await _db.GetProjectsAsync();
+        _project.RefreshRequested += StateHasChanged;
+        _loading = false;
+    }
+
+    private List<MyProject> GetDroppedProjects()
+    {
+        return projects.Where(x => x.Category == Constants.Filter_Trash).ToList();
+    }
+}

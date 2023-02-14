@@ -1,15 +1,43 @@
-﻿<MudTable Items="@Projects" Elevation=0 Hover="true">
+﻿<MudTable Items="@Projects" Class="border border-solid" Breakpoint="Breakpoint.Sm" Loading="@Loading" LoadingProgressColor="Color.Info">
     <HeaderContent>
-        <MudTh>Title</MudTh>
-        <MudTh>Category</MudTh>
+        <MudTh><MudText Typo="Typo.h6">Project</MudText>  </MudTh>
+        <MudTh><MudText Typo="Typo.h6">Completed On</MudText></MudTh>
+        <MudTh><MudText Typo="Typo.h6">Revert</MudText></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Nr">@context.ProjectName</MudTd>
-        <MudTd DataLabel="Sign">@context.Category</MudTd>
+        <MudTd DataLabel="Project"><MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{context.Id}"))">@context.ProjectName</MudLink> </MudTd>
+        <MudTd DataLabel="Completed On">@context.DraftCompletionDate</MudTd>
+        <MudTd DataLabel="Category">
+            <MudMenu Label="@context.Category">
+                <ActivatorContent>
+                    <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color">@context.Category</MudChip>
+                </ActivatorContent>
+                <ChildContent>
+                    @foreach (var item in Constants.Filters)
+                    {
+                        <MudMenuItem OnClick="@(()=>ChangeCategory(context,item))">@item</MudMenuItem>
+                    }
+                </ChildContent>
+
+            </MudMenu>
+        </MudTd>
     </RowTemplate>
 </MudTable>
 
-
-@code{
+@code {
     [Parameter] public List<MyProject> Projects { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public Color Color { get; set; }
+
+    private async Task ChangeCategory(MyProject project, string category)
+    {
+        if (project.Category.Equals(Constants.Filter_Completed))
+        {
+            project.IsIterationCompleted = !project.IsIterationCompleted;
+        }
+        project.Category = category;
+        await _db.SaveItemAsync(project);
+        _project.CallRequestRefresh();
+        StateHasChanged();
+    }
 }

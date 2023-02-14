@@ -20,7 +20,7 @@ public static class Constants
     public const string Filter_Wishlist = "wishlist";
     public const string Filter_Ideas = "ideas";
     public const string Filter_Waitlist = "waitlist";
-    public const string Filter_Trash = "trash";
+    public const string Filter_Trash = "dropped";
     public const string Filter_Completed = "completed";
 
     public static readonly List<string> Filters = new() { Filter_Active, Filter_Completed, Filter_Ideas, Filter_Trash, Filter_Waitlist, Filter_Wishlist };
