@@ -33,6 +33,11 @@
 
     private async Task ChangeCategory(string category)
     {
+        if(category.Equals(Constants.Filter_Completed))
+        {
+            project.DraftCompletionDate = DateTime.Now;
+            project.IsIterationCompleted = true;
+        }
         project.Category = category;
         await _db.SaveItemAsync(project);
         _project.CallRequestRefresh();

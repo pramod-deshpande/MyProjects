@@ -1,0 +1,64 @@
+﻿@page "/completed-projects"
+
+<CustomHeading Title="Completed Projects"></CustomHeading>
+
+<MudContainer>
+    <MudTable Items="@GetCompletedProjects()" Class="border border-solid" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+        <HeaderContent>
+            <MudTh><MudText Typo="Typo.h6">Project</MudText>  </MudTh>
+            <MudTh><MudText Typo="Typo.h6">Completed On</MudText></MudTh>
+            <MudTh><MudText Typo="Typo.h6">Revert</MudText></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Project"><MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{context.Id}"))">@context.ProjectName</MudLink> </MudTd>
+            <MudTd DataLabel="Completed On">@context.DraftCompletionDate</MudTd>
+            <MudTd DataLabel="Category">
+                <MudMenu Label="@context.Category">
+                    <ActivatorContent>
+                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Success">@context.Category</MudChip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        @foreach (var item in Constants.Filters)
+                        {
+                            <MudMenuItem OnClick="@(()=>ChangeCategory(context,item))">@item</MudMenuItem>
+                        }
+                    </ChildContent>
+
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudContainer>
+
+
+
+
+@code{
+
+    List<MyProject> projects => _project.Projects;
+    bool _loading;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _project.Projects = await _db.GetProjectsAsync();
+        _project.RefreshRequested += StateHasChanged;
+        _loading = false;
+    }
+
+    private List<MyProject> GetCompletedProjects()
+    {
+        return projects.Where(x => x.Category == Constants.Filter_Completed && x.IsIterationCompleted).ToList();
+    }
+
+
+    private async Task ChangeCategory(MyProject project,string category)
+    {
+        project.Category = category;
+        project.IsIterationCompleted = !project.IsIterationCompleted;
+        await _db.SaveItemAsync(project);
+        _project.CallRequestRefresh();
+        StateHasChanged();
+    }
+}

@@ -5,9 +5,7 @@
     <MudGrid Spacing="10">
         <MudItem md="12">
             <MudPaper Class="pa-5 border border-solid rounded mud-border-secondary">
-                <MudText Typo="Typo.h5">
-                    Up Next
-                </MudText>
+                <CustomHeading Title="Up Next"></CustomHeading>
                 @if (!WaitList().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
@@ -24,9 +22,7 @@
         </MudItem>
         <MudItem md="12">
             <MudPaper Class="pa-5 border border-solid rounded mud-border-info">
-                <MudText Typo="Typo.h5">
-                    Wish List
-                </MudText>
+                <CustomHeading Title="Wishlist"></CustomHeading>
                 @if (!WishList().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
@@ -44,9 +40,7 @@
         </MudItem>
         <MudItem md="12">
             <MudPaper Class="pa-5 border border-solid rounded mud-border-tertiary">
-                <MudText Typo="Typo.h5">
-                    Ideas
-                </MudText>
+                <CustomHeading Title="Ideas"></CustomHeading>
                 @if (!GetIdeas().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
