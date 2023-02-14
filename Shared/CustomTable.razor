@@ -18,9 +18,12 @@
                         <MudMenuItem OnClick="@(()=>ChangeCategory(context,item))">@item</MudMenuItem>
                     }
                 </ChildContent>
-
             </MudMenu>
         </MudTd>
+        @if (context.Category.Equals(Constants.Filter_Trash))
+        {
+            <MudTd><MudTooltip Text="Delete permanently" Arrow="true" Placement="Placement.Top"><MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Color="Color.Error" OnClick="@(()=>DeleteProject(context))"></MudIconButton></MudTooltip></MudTd>
+        }
     </RowTemplate>
 </MudTable>
 
@@ -39,5 +42,18 @@
         await _db.SaveItemAsync(project);
         _project.CallRequestRefresh();
         StateHasChanged();
+    }
+
+    private async Task DeleteProject(MyProject project)
+    {
+       var res =  await _db.DeleteItemAsync(project);
+       if(res == 1){
+            
+                  Snackbar.Add($"Project deleted!", Severity.Normal);
+                      _project.CallRequestRefresh();
+        StateHasChanged();
+       }
+       
+
     }
 }

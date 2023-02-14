@@ -3,7 +3,7 @@
 <MudCard Elevation="4" Outlined="true" Class="rounded my-8">
     <MudCardContent Class="d-flex flex-column gap-4">
         <MudContainer Class="d-flex justify-space-between">
-            <MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))" Typo="Typo.h6">@project.ProjectName</MudLink>
+            <MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))" Typo="Typo.h6" Color="Color.Dark">@project.ProjectName</MudLink>
             <MudMenu Label="@project.Category">
                 <ActivatorContent>
                     <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
