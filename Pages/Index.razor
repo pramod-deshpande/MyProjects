@@ -3,17 +3,22 @@
 
 <CustomHeading Title="Active Projects"></CustomHeading>
 <MudContainer Class="mt-10">
-    @if (!projects.Any())
-    {
-        <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Secondary">No active projects.</MudText>
-    }
-    else
-    {
-        @foreach (var project in GetProjectsByCategory(Constants.Filter_Active))
-        {
-            <DataCard project="project" CustomColor="Color.Primary" />
-        }
-    }
+    <MudGrid Spacing="5" Justify="Justify.SpaceAround">
+            @if (!projects.Any())
+            {
+                <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Secondary">No active projects.</MudText>
+            }
+            else
+            {
+                @foreach (var project in GetProjectsByCategory(Constants.Filter_Active))
+                {
+            <MudItem xs="6" md="4">
+                    <DataCard project="project" CustomColor="Color.Primary" />
+                </MudItem>
+                }
+            }
+        
+    </MudGrid>
 </MudContainer>
 
 

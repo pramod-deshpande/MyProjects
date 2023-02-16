@@ -1,5 +1,6 @@
-﻿<MudNavLink Match="NavLinkMatch.All" Href=@Link Class="my-10"><MudText Typo="Typo.body1"  Style="@($"color:{Colors.Grey.Darken4}")">@Name</MudText></MudNavLink>
+﻿<MudNavLink Match="NavLinkMatch.All" Href=@Link Class="my-10"><MudText Typo="Typo.body1" Style ="@($"color:{Colors.Grey.Darken4}")">@Name</MudText></MudNavLink>
 @code {
     [Parameter] public string Name { get; set; } 
     [Parameter] public string Link { get; set; } 
+    //Style="@($"color:{Colors.Grey.Lighten4}")"
 }

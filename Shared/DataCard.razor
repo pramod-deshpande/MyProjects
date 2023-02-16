@@ -1,46 +1,59 @@
 ﻿
 <style>
-    .card{
+
+    .style-link {
+        transition: all 0.4s ease-in-out;
+    }
+
+
+        .style-link:hover{
+            transform: scale(1.1);
+        }
+
+        .card {
+        border-radius: 15px;
        
-        
     }
-    .card:hover{
-            border: 1px solid #000000;
+
+
+        .card:hover {
+            border: 3px solid @RandomColor.GetRandomColor();
             z-index: 500;
-            cursor:pointer;
-           
-    }
+            border-radius: 3px;
+        }
+
+
 </style>
 
-<a @onclick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))">
-    <MudCard Elevation="4" Class=" card rounded my-8">
-        <MudCardContent Class="d-flex flex-column gap-4 ">
-            <MudContainer Class="d-flex justify-space-between">
-                <MudText Typo="Typo.subtitle1" Color="Color.Dark">@project.ProjectName</MudText>
-                <MudMenu Label="@project.Category">
-                    <ActivatorContent>
-                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
-                    </ActivatorContent>
-                    <ChildContent>
-                        @foreach (var item in Constants.Filters)
-                        {
-                            <MudMenuItem OnClick="@(()=>ChangeCategory(item))">@item</MudMenuItem>
-                        }
-                    </ChildContent>
 
-                </MudMenu>
-            </MudContainer>
-            <MudContainer Class="d-flex justify-space-between">
-                <MudLink Typo="Typo.body2" Href="@project.GithubLink">@project.GithubLink</MudLink>
-                @if (!string.IsNullOrEmpty(project.Label))
-                {
-                    <MudChip Size="Size.Small" Variant="Variant.Outlined" Color="CustomColor">@(project.Label)</MudChip>
-                }
+<MudPaper Elevation="4" Class="card my-8 py-4">
+    <MudContainer Class="d-flex flex-column gap-4">
+        <MudContainer Class="d-flex justify-space-between">
+            <MudLink @onclick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))" Typo="Typo.body1" Color="Color.Dark">@project.ProjectName</MudLink>
+            <MudLink Typo="Typo.body2" Href="@project.GithubLink" Class="style-link"><MudIcon Color="Color.Dark" Icon="@Icons.Custom.Brands.GitHub"></MudIcon></MudLink>
+        </MudContainer>
+        <MudContainer Class="d-flex justify-space-between">
 
-            </MudContainer>
-        </MudCardContent>
-    </MudCard>
-</a>
+            @if (!string.IsNullOrEmpty(project.Label))
+            {
+                <MudChip Size="Size.Small" Variant="Variant.Outlined" Color="CustomColor">@(project.Label)</MudChip>
+            }
+            <MudMenu Label="@project.Category">
+                <ActivatorContent>
+                    <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
+                </ActivatorContent>
+                <ChildContent>
+                    @foreach (var item in Constants.Filters)
+                    {
+                        <MudMenuItem OnClick="@(()=>ChangeCategory(item))">@item</MudMenuItem>
+                    }
+                </ChildContent>
+            </MudMenu>
+
+        </MudContainer>
+    </MudContainer>
+</MudPaper>
+
 
 
 
@@ -52,7 +65,7 @@
 
     private async Task ChangeCategory(string category)
     {
-        if(category.Equals(Constants.Filter_Completed))
+        if (category.Equals(Constants.Filter_Completed))
         {
             project.DraftCompletionDate = DateTime.Now;
             project.IsIterationCompleted = true;

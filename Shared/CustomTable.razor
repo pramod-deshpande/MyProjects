@@ -48,6 +48,10 @@
         {
             project.IsIterationCompleted = !project.IsIterationCompleted;
         }
+        if (category.Equals(Constants.Filter_Completed))
+        {
+            project.IsIterationCompleted = true;
+        }
         project.Category = category;
         await _db.SaveItemAsync(project);
         ChangeState();
