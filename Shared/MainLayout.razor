@@ -6,23 +6,25 @@
 
 
 <MudLayout>
-    <MudAppBar Dense="true" Elevation="0" Class="border-b mud-border-dark border-solid">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Primary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudAppBar Dense="true" Elevation="0" >
+        <MudToggleIconButton @bind-Toggled="_drawerOpen" Color="Color.Primary" ToggledColor="Color.Secondary" Icon="@Icons.Material.Filled.MenuOpen"  ToggledIcon="@Icons.Material.Filled.Close"></MudToggleIconButton>
+@*
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Primary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />*@
         <MudSpacer />
-        <MudText Typo=Typo.h6 Color="Color.Default">My Projects</MudText>
+        <MudLink Href="/" Typo=Typo.h6 Color="Color.Info">My Projects</MudLink>
     </MudAppBar>
 
-    <MudToolBar Class="mt-16 px-6">
+    <MudToolBar Class="mt-12 px-6">
         <MudSpacer />
         <MudButton Class="px-3 py-2 rounded border-2 border-solid" Link="/create" StartIcon="@Icons.Material.Filled.Add"><MudText Typo="Typo.subtitle1">Add a project</MudText></MudButton>
     </MudToolBar>
 
-    <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always">
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always" Class="border-r mud-border-dark border-solid">
         <NavMenu />
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-10">
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-2">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -43,25 +45,26 @@
             {
                 Default = new Default()
                 {
-                    FontFamily = new[] { "Open Sans", "sans-serif" }
-                }
+                    FontFamily = new[] { "Open Sans", "sans-serif" },
+
+                },
+                H4 = new H4()
+                {
+                    FontFamily = new[] { "Ubuntu", "sans-serif" },
+    
+                },
+                H6 = new H6()
+                {
+                    FontFamily = new[] { "Ubuntu", "sans-serif" },
+
+                },
             },
             Palette = new Palette()
             {
-                Background = "#f6f4f6",
-                Surface = "#f7f7f7",
-                AppbarBackground = "#1f1f1f",
-                DrawerBackground = "#1f1f1f",
-
-                Primary = "#11768C",
-                PrimaryLighten = "#44A9BF",
-                PrimaryDarken = "#004359",
-
-
-                Secondary = "#8C2711",
-                SecondaryLighten = "#BF5A44",
-                SecondaryDarken = "#590000"
-
+                Background = "#f5f5f5",
+                Surface = "#fafafa",
+                AppbarBackground = "#0d1117",
+                DrawerBackground = "#fafafa",
             }
 
 

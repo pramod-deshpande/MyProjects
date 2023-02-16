@@ -1,7 +1,8 @@
 ﻿@page "/"
 
-<MudPaper Class="pa-5 border border-solid rounded mud-border-primary">
-    <CustomHeading Title="Active Projects"></CustomHeading>
+
+<CustomHeading Title="Active Projects"></CustomHeading>
+<MudContainer Class="mt-10">
     @if (!projects.Any())
     {
         <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Secondary">No active projects.</MudText>
@@ -10,10 +11,10 @@
     {
         @foreach (var project in GetProjectsByCategory(Constants.Filter_Active))
         {
-            <DataCard project="project" />
+            <DataCard project="project" CustomColor="Color.Primary" />
         }
     }
-</MudPaper>
+</MudContainer>
 
 
 

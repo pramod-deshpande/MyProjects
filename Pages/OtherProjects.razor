@@ -4,8 +4,9 @@
 <MudContainer Class="my-10">
     <MudGrid Spacing="10">
         <MudItem md="12">
-            <MudPaper Class="pa-5 border border-solid rounded mud-border-secondary">
-                <CustomHeading Title="Up Next"></CustomHeading>
+            <CustomHeading Title="Up Next"></CustomHeading>
+            <MudContainer Class="mt-10">
+
                 @if (!WaitList().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
@@ -18,11 +19,15 @@
                     }
                 }
 
-            </MudPaper>
+            </MudContainer>
         </MudItem>
         <MudItem md="12">
-            <MudPaper Class="pa-5 border border-solid rounded mud-border-info">
-                <CustomHeading Title="Wishlist"></CustomHeading>
+            <MudDivider DividerType="DividerType.Middle" />
+        </MudItem>
+        <MudItem md="12">
+            <CustomHeading Title="Wishlist"></CustomHeading>
+            <MudContainer Class="mt-10">
+
                 @if (!WishList().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
@@ -35,12 +40,15 @@
                     }
                 }
 
-            </MudPaper>
-
+            </MudContainer>
         </MudItem>
         <MudItem md="12">
-            <MudPaper Class="pa-5 border border-solid rounded mud-border-tertiary">
-                <CustomHeading Title="Ideas"></CustomHeading>
+            <MudDivider DividerType="DividerType.Middle" />
+        </MudItem>
+        <MudItem md="12">
+            <CustomHeading Title="Ideas"></CustomHeading>
+            <MudContainer Class="mt-10">
+
                 @if (!GetIdeas().Any())
                 {
                     <MudText Align="Align.Center" Typo="Typo.subtitle1" Color="Color.Secondary">No projects.</MudText>
@@ -53,7 +61,7 @@
                     }
                 }
 
-            </MudPaper>
+            </MudContainer>
         </MudItem>
     </MudGrid>
 </MudContainer>

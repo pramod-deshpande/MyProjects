@@ -1,28 +1,47 @@
 ﻿
+<style>
+    .card{
+       
+        
+    }
+    .card:hover{
+            border: 1px solid #000000;
+            z-index: 500;
+            cursor:pointer;
+           
+    }
+</style>
 
-<MudCard Elevation="4" Outlined="true" Class="rounded my-8">
-    <MudCardContent Class="d-flex flex-column gap-4">
-        <MudContainer Class="d-flex justify-space-between">
-            <MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))" Typo="Typo.h6" Color="Color.Dark">@project.ProjectName</MudLink>
-            <MudMenu Label="@project.Category">
-                <ActivatorContent>
-                    <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
-                </ActivatorContent>
-                <ChildContent>
-                    @foreach (var item in Constants.Filters)
-                    {
-                        <MudMenuItem OnClick="@(()=>ChangeCategory(item))" >@item</MudMenuItem>
-                    }
-                </ChildContent>
+<a @onclick="@(()=>Navigation.NavigateTo($"/create/{project.Id}"))">
+    <MudCard Elevation="4" Class=" card rounded my-8">
+        <MudCardContent Class="d-flex flex-column gap-4 ">
+            <MudContainer Class="d-flex justify-space-between">
+                <MudText Typo="Typo.subtitle1" Color="Color.Dark">@project.ProjectName</MudText>
+                <MudMenu Label="@project.Category">
+                    <ActivatorContent>
+                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="CustomColor">@project.Category</MudChip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        @foreach (var item in Constants.Filters)
+                        {
+                            <MudMenuItem OnClick="@(()=>ChangeCategory(item))">@item</MudMenuItem>
+                        }
+                    </ChildContent>
 
-            </MudMenu>
-        </MudContainer>
-        <MudContainer>
-            <MudLink Typo="Typo.caption" Href="@project.GithubLink">@project.GithubLink</MudLink>
+                </MudMenu>
+            </MudContainer>
+            <MudContainer Class="d-flex justify-space-between">
+                <MudLink Typo="Typo.body2" Href="@project.GithubLink">@project.GithubLink</MudLink>
+                @if (!string.IsNullOrEmpty(project.Label))
+                {
+                    <MudChip Size="Size.Small" Variant="Variant.Outlined" Color="CustomColor">@(project.Label)</MudChip>
+                }
 
-        </MudContainer>
-    </MudCardContent>
-</MudCard>
+            </MudContainer>
+        </MudCardContent>
+    </MudCard>
+</a>
+
 
 
 @code {

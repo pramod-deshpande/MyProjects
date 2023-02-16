@@ -1,12 +1,22 @@
 ﻿<MudTable Items="@Projects" Class="border border-solid" Breakpoint="Breakpoint.Sm" Loading="@Loading" LoadingProgressColor="Color.Info">
     <HeaderContent>
-        <MudTh><MudText Typo="Typo.h6">Project</MudText>  </MudTh>
+        <MudTh><MudText Typo="Typo.h6">Project</MudText> </MudTh>
+
         <MudTh><MudText Typo="Typo.h6">Completed On</MudText></MudTh>
+      
         <MudTh><MudText Typo="Typo.h6">Revert</MudText></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Project"><MudLink OnClick="@(()=>Navigation.NavigateTo($"/create/{context.Id}"))">@context.ProjectName</MudLink> </MudTd>
-        <MudTd DataLabel="Completed On">@context.DraftCompletionDate</MudTd>
+        @if (context.Category.Equals(Constants.Filter_Trash))
+        {
+            <MudTd DataLabel="Completed On">no completion date</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Completed On">@context.DraftCompletionDate</MudTd>
+        }
+
         <MudTd DataLabel="Category">
             <MudMenu Label="@context.Category">
                 <ActivatorContent>
@@ -40,20 +50,20 @@
         }
         project.Category = category;
         await _db.SaveItemAsync(project);
-        _project.CallRequestRefresh();
-        StateHasChanged();
+        ChangeState();
     }
 
     private async Task DeleteProject(MyProject project)
     {
-       var res =  await _db.DeleteItemAsync(project);
-       if(res == 1){
-            
-                  Snackbar.Add($"Project deleted!", Severity.Normal);
-                      _project.CallRequestRefresh();
-        StateHasChanged();
-       }
-       
+        var res = await _db.DeleteItemAsync(project);
+        Snackbar.Add($"Project deleted!", Severity.Normal);
+        Navigation.NavigateTo("/dropped-projects", true);
 
+    }
+
+    private void ChangeState()
+    {
+        _project.CallRequestRefresh();
+        StateHasChanged();
     }
 }
