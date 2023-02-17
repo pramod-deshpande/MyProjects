@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject ExportData data
 
 
 <CustomHeading Title="Active Projects"></CustomHeading>
@@ -22,7 +23,7 @@
 </MudContainer>
 
 
-
+<MudButton OnClick="Export" >Text</MudButton>
 
 
 
@@ -41,7 +42,11 @@
     {
         return projects.Where(x => x.Category == category).ToList();
     }
-    
-  
+
+    private async Task Export()
+    {
+        await data.ExportToCSV();
+    }
+
 
 }
