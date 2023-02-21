@@ -40,7 +40,11 @@ public class MyProjectsDatabaseInit
         if (project.Id != 0)
             return await Database.UpdateAsync(project);
         else
+        {
+            project.CreationDate = DateTime.Now;
             return await Database.InsertAsync(project);
+        }
+     
     }
 
     public async Task<int> DeleteItemAsync(MyProject project)

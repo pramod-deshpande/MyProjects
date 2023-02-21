@@ -9,20 +9,13 @@
             <MudTextField @bind-Value="myProject.ProjectName" Label="Project name" Required="true" Variant="Variant.Text"></MudTextField>
             <MudTextField @bind-Value="myProject.Description" Label="Description" Lines="2" Variant="Variant.Text"></MudTextField>
             <MudTextField @bind-Value="myProject.GithubLink" Label="Github link" Variant="Variant.Text"></MudTextField>
-           
-                <MudSelect T="string" Label="Labels" Variant="Variant.Text" @bind-Value="myProject.Label" AnchorOrigin="Origin.BottomCenter">
-                    @foreach (var item in Constants.Labels)
-                    {
-                        <MudSelectItem Value=@item />
-                    }
-                </MudSelect>
-@*                <MudChipSet @bind-SelectedChip="selected" Filter="true" Class="d-inline-flex" Mandatory="@mandatory">
-                    @foreach (var item in Constants.Labels)
-                    {
-                        <MudChip Size="Size.Small" Variant="Variant.Text" Color="Color.Dark" Text="@item">@item</MudChip>
-                    }
-                </MudChipSet>*@
-         
+
+            <MudSelect T="string" Label="Labels" Variant="Variant.Text" @bind-Value="myProject.Label" AnchorOrigin="Origin.BottomCenter">
+                @foreach (var item in Constants.Labels)
+                {
+                    <MudSelectItem Value=@item />
+                }
+            </MudSelect>
             <MudSelect T="string" Label="Category" Variant="Variant.Text" @bind-Value="myProject.Category" AnchorOrigin="Origin.BottomCenter">
                 @foreach (var item in Constants.Filters)
                 {
@@ -36,8 +29,6 @@
                     <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Dark"><MudText Typo="Typo.subtitle1">Submit</MudText></MudButton>
                 </div>
             }
-      
-       
         </MudContainer>
     </EditForm>
 
@@ -45,25 +36,19 @@
 
 
 @code {
-    
-    //MudChip selected;
+
     MyProject myProject = new();
     [Parameter] public string? Id { get; set; }
-
-
 
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrWhiteSpace(Id))
         {
-            var project  = await _db.GetProjectAsync(int.Parse(Id));
+            var project = await _db.GetProjectAsync(int.Parse(Id));
             if (project is not null)
             {
                 myProject = project;
-                
             }
-
-                
         }
         else
         {
@@ -74,15 +59,16 @@
 
     async Task SaveProject()
     {
-   
-        //@if(selected is not null)
-        //{
-        //    myProject.Label = string.IsNullOrEmpty(selected.Text) ? "" : selected.Text;
-        //}
-  
-        myProject.CreationDate = DateTime.Now;
-        myProject.IsIterationCompleted = false;
-        myProject.DraftCompletionDate = null;
+        if (myProject.Category.Equals(Constants.Filter_Completed))
+        {
+            myProject.IsIterationCompleted = true;
+            myProject.DraftCompletionDate = DateTime.Now;
+        }
+        else
+        {
+            myProject.IsIterationCompleted = true;
+            myProject.DraftCompletionDate = null;
+        }
         var res = await _db.SaveItemAsync(myProject);
         myProject = new();
         Snackbar.Add($"Project successfully saved!", Severity.Normal);
